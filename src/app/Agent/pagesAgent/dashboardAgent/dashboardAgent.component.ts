@@ -18,25 +18,45 @@ import {AgentService} from '../../../service/agent.service';
   styleUrls: ['./dashboardAgent.component.scss']
 })
 export class DashboardAgentComponent implements OnInit {
-  constructor(private router: Router, private clientService: ClientService, private agentService: AgentService,
-  private sharedAgentService: SharedAgentService, private route: ActivatedRoute
+  clients: IClient[] = [];
+  phoneNumber: string;
+  agent: IAgent = {
+    address: "",
+    birthDate: undefined,
+    cin: "",
+    commercialRn: "",
+    confirmEmail: "",
+    email: "",
+    isFirstLogin: false,
+    lastName: "",
+    newPassword: "",
+    patentNumber: "",
+    phoneNumber: "",
+    id: null,
+    firstName: ''
+  };
+  constructor(private router: Router,
+              private clientService: ClientService,
+              private agentService: AgentService,
+              private sharedAgentService: SharedAgentService,
+              private route: ActivatedRoute
 
   ) { }
 
-  clients: IClient[] = [];
-  phoneNumber: string;
-  agent: IAgent ;
+
+
 
   ngOnInit(): void {
-    this.getAllClientByAgentId(this.agent.id);
-    this.sharedAgentService.setAgent(this.agent);
+
+
     this.route.queryParams.subscribe(params => {
       this.phoneNumber = params['phoneNumber'];
       if (this.phoneNumber) {
         this.getAgentByPhone(this.phoneNumber);
       }
     });
-
+    this.sharedAgentService.setAgent(this.agent);
+    this.getAllClientByAgentId(this.agent.id);
   }
 
 

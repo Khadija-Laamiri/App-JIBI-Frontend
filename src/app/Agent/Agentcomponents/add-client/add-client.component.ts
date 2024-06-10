@@ -14,6 +14,7 @@ import {IClientRegistrationRequest} from '../../../models/ClientRegistrationRequ
 })
 export class AddClientComponent implements OnInit {
 
+  public client: IClient = {} as IClient;
  clientRegistrationRequest: IClientRegistrationRequest = {} as IClientRegistrationRequest;
   constructor(private clientService: ClientService, private router: Router , private toastr: ToastrService) {}
 
