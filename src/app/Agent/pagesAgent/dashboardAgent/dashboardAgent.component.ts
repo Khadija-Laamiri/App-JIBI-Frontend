@@ -5,10 +5,10 @@ import Chart from 'chart.js';
 import {IClient} from '../../../models/Client';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ClientService} from '../../../service/client.service';
-import {SharedClientService} from '../../../client/services/shared-client.service';
 import {SharedAgentService} from '../../../service/shared-agent.service';
 import {IAgent} from '../../../models/Agent';
 import {AgentService} from '../../../service/agent.service';
+import {SharedInfosService} from '../../../service/shared-infos.service';
 
 
 
@@ -20,43 +20,21 @@ import {AgentService} from '../../../service/agent.service';
 export class DashboardAgentComponent implements OnInit {
   clients: IClient[] = [];
   phoneNumber: string;
-  agent: IAgent = {
-    address: "",
-    birthDate: undefined,
-    cin: "",
-    commercialRn: "",
-    confirmEmail: "",
-    email: "",
-    isFirstLogin: false,
-    lastName: "",
-    newPassword: "",
-    patentNumber: "",
-    phoneNumber: "",
-    id: null,
-    firstName: ''
-  };
-  constructor(private router: Router,
-              private clientService: ClientService,
-              private agentService: AgentService,
-              private sharedAgentService: SharedAgentService,
-              private route: ActivatedRoute
+  agent: IAgent;
 
-  ) { }
-
-
+  // tslint:disable-next-line:max-line-length
+  constructor(private router: Router, private clientService: ClientService, private agentService: AgentService, private sharedAgentService: SharedAgentService,
+              private sharedInfosService : SharedInfosService, private route: ActivatedRoute
+  ) {
+  }
 
 
   ngOnInit(): void {
-
-
-    this.route.queryParams.subscribe(params => {
-      this.phoneNumber = params['phoneNumber'];
-      if (this.phoneNumber) {
-        this.getAgentByPhone(this.phoneNumber);
-      }
-    });
-    this.sharedAgentService.setAgent(this.agent);
-    this.getAllClientByAgentId(this.agent.id);
+    this.getAgentByPhone(this.sharedInfosService.getPhoneNumber());
+    this.agent = this.sharedAgentService.getAgent();
+    //this.getAllClients(this.agent.id);
+    //this.getAllClientByAgentId(this.agent.id);
+    //this.sharedAgentService.setAgent(this.agent);
   }
 
 
@@ -64,7 +42,9 @@ export class DashboardAgentComponent implements OnInit {
     this.agentService.getAgentByPhoneNumber(phoneNum).subscribe(res => {
       console.log(res);
       this.agent = res;
+      this.getAllClientByAgentId(this.agent?.id);
       this.sharedAgentService.setAgent(this.agent);
+      //this.sharedAgentService.setAgent(this.agent);
     }, error => {
       console.log(error);
     });
@@ -75,13 +55,25 @@ export class DashboardAgentComponent implements OnInit {
     this.router.navigate(['/add-client']);
   }
 
+  getAllClients(idAgent: number): void {
+    this.clientService.getAllClientsByAgentId(idAgent).subscribe(
+      (clients: IClient[]) => {
+        this.clients = clients;
+      },
 
-  getAllClientByAgentId(idAgent : number): void {
-    this.clientService.getAllAgentClients(idAgent).subscribe(res => {
+      (error) => {
+        console.error('Une erreur s\'est produite lors de la récupération des clients :', error);
+      }
+    );
+  }
+
+  getAllClientByAgentId(idAgent: number): void {
+    this.clientService.getAllClientsByAgentId(idAgent).subscribe(res => {
       this.clients = res;
     }, error => {
       console.log(error);
     });
+
   }
 
 
@@ -90,16 +82,13 @@ export class DashboardAgentComponent implements OnInit {
     this.clientService.deleteClient(id).subscribe(
       () => {
         console.log('Client deleted successfully.');
+        this.getAllClients(this.agent.id);
         this.getAllClientByAgentId(this.agent.id);
       },
       (error) => {
         console.error('An error occurred while deleting the client:', error);
       }
     );
-    window.location.reload();
-
-  }
-
-
+    window.location.reload(); }
 
 }

@@ -45,6 +45,7 @@
             <tbody>
             <tr *ngFor="let client of clients" class="align-middle">
               <th scope="row">{{ client.firstName }}</th>
+              <td [hidden]="true">{{ client.id }}</td>
               <td>{{ client.lastName }}</td>
               <td>{{ client.email }}</td>
               <td>{{ client.phoneNumber }}</td>

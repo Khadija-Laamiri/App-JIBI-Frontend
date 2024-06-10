@@ -5,9 +5,11 @@ import {IClient} from '../models/Client';
 
 import { catchError, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-
-import {Operation} from "../client/models/operation";
+import {IPaymentAccount} from '../models/paymentAccount';
 import { IClientRegistrationRequest} from '../models/ClientRegistrationRequest';
+import {Operation} from '../client/models/operation';
+
+
 
 
 @Injectable({
@@ -16,6 +18,8 @@ import { IClientRegistrationRequest} from '../models/ClientRegistrationRequest';
 export class ClientService {
 
   private serverUrl = `http://localhost:8080/api/v1/client`;
+
+
   private authorization = this.cookieService.get('Authorization');
 
   constructor(private httpClient: HttpClient, private cookieService: CookieService) {
@@ -30,11 +34,15 @@ export class ClientService {
       .pipe(catchError(this.handleError));
   }
 
-  public getAllAgentClients(idAgent: number): Observable<IClient[]> {
 
-    const dataUrl = `${this.serverUrl}/listByAgent/${idAgent}`;
-    console.log(this.authorization);
 
+    //const dataUrl = `${this.serverUrl}/listByAgent/${idAgent}`;
+    //console.log(this.authorization);
+
+  public getAllClientsByAgentId(idagent: number): Observable<IClient[]> {
+
+
+    const dataUrl = `${this.serverUrl}/listByAgent/${idagent}`;
     const headers = {
       'Authorization': `${this.authorization}`
     };
@@ -48,7 +56,7 @@ export class ClientService {
     const headers = {
       'Authorization': `${this.authorization}`
     };
-    const dataUrl = `${this.serverUrl}/api/v1/client/delete/${id}`;
+    const dataUrl = `${this.serverUrl}/delete/${id}`;
     return this.httpClient.delete<{}>(dataUrl, {headers}).pipe(catchError(this.handleError));
 
   }
@@ -59,7 +67,7 @@ export class ClientService {
     const headers = {
       'Authorization': `${this.authorization}`
     };
-    const dataUrl = `${this.serverUrl}/api/v1/agent/client/${id}`;
+    const dataUrl = `${this.serverUrl}/${id}`;
     return this.httpClient.get<IClient>(dataUrl, {headers}).pipe(catchError(this.handleError));
   }
 
@@ -81,7 +89,7 @@ export class ClientService {
   }
 
   getAgentOperation(id: number): Observable<Operation[]> {
-    let dataUrl: string = `${this.serverUrl}/operations/${id}`;
+    const dataUrl = `${this.serverUrl}/operations/${id}`;
     const headers = {
       'Authorization': `${this.authorization}`
     };
