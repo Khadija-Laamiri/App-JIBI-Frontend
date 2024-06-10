@@ -91,4 +91,6 @@ export class DashboardAgentComponent implements OnInit {
     );
     window.location.reload(); }
 
-}
+
+    }
+

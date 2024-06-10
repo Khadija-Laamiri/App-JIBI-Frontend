@@ -5,19 +5,15 @@ import { Injectable } from '@angular/core';
 })
 export class SharedInfosService {
 
-  private readonly phoneNumberKey = 'phoneNumber';
 
+  private phoneNumber: string;
   constructor() { }
 
   setPhoneNumber(phoneNumber: string) {
-    sessionStorage.setItem(this.phoneNumberKey, phoneNumber);
+    this.phoneNumber = phoneNumber;
   }
 
-  getPhoneNumber(): string | null {
-    return sessionStorage.getItem(this.phoneNumberKey);
-  }
-
-  clearPhoneNumber() {
-    sessionStorage.removeItem(this.phoneNumberKey);
+  getPhoneNumber(): string {
+    return this.phoneNumber;
   }
 }
