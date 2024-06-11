@@ -13,7 +13,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AgentService {
 
-  private serverUrl = `http://localhost:9090` ;
+  private serverUrl = `http://localhost:8080` ;
   private authorization = this.cookieService.get('Authorization');
 
   constructor(private httpClient: HttpClient, private cookieService: CookieService) {}
@@ -45,7 +45,7 @@ export class AgentService {
   }
 
   public getAgentByPhoneNumber(phoneNumber: String): Observable<IAgent> {
-    let dataUrl: string = `${this.serverUrl}/agentByPhone/${phoneNumber}`;
+    let dataUrl: string = `${this.serverUrl}/api/v1/client/agentByPhone/${phoneNumber}`;
     console.log(this.authorization);
     const headers = {
       'Authorization': `${this.authorization}`
@@ -54,7 +54,7 @@ export class AgentService {
   }
 
 
-
+z
   public createAgent(agent: IAgent): Observable<IAgent> {
     const headers = {
       'Authorization': `${this.authorization}`

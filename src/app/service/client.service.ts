@@ -17,7 +17,8 @@ import {Operation} from '../client/models/operation';
 })
 export class ClientService {
 
-  private serverUrl = `http://localhost:9090/api/v1/client`;
+  private serverUrl = `http://localhost:8080/api/v1/client`;
+
 
   private authorization = this.cookieService.get('Authorization');
 
@@ -34,9 +35,14 @@ export class ClientService {
   }
 
 
+
+    //const dataUrl = `${this.serverUrl}/listByAgent/${idAgent}`;
+    //console.log(this.authorization);
+
   public getAllClientsByAgentId(idagent: number): Observable<IClient[]> {
 
-    const dataUrl = `${this.serverUrl}/api/v1/client/listByAgent/${idagent}`;
+
+    const dataUrl = `${this.serverUrl}/listByAgent/${idagent}`;
     const headers = {
       'Authorization': `${this.authorization}`
     };
