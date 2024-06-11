@@ -96,20 +96,22 @@
                   <div class="section-divider"></div>
 
                   <div class="form-group">
-                    <label for="lastName" class="Montserrat">Nom *</label>
-                    <input type="text" class="form-control" [(ngModel)]="client.lastName" id="lastName" name="lastName" required>
+
+                    <label for="firstName" class="Montserrat">Nom *</label>
+                    <input type="text" class="form-control" id="firstName"  [(ngModel)]="client.lastName" name="firstName" required>
                   </div>
                   <div class="form-group">
-                    <label for="firstName" class="Montserrat">Prénom *</label>
-                    <input type="text" class="form-control" id="firstName" [(ngModel)]="client.firstName" name="firstName" required>
+                    <label for="lastName" class="Montserrat">Prénom *</label>
+                    <input type="text" class="form-control" id="lastName"  [(ngModel)]="client.firstName"  name="lastName" required>
                   </div>
                   <div class="form-group">
                     <label for="phoneNumber" class="Montserrat">Téléphone *</label>
-                    <input type="text" class="form-control" id="phoneNumber" [(ngModel)]="client.phoneNumber" name="phoneNumber" required>
+                    <input type="text" class="form-control" id="phoneNumber" [(ngModel)]="client.phoneNumber"  name="phoneNumber" required>
                   </div>
                   <div class="form-group">
                     <label for="email" class="Montserrat">Email</label>
-                    <input type="email" class="form-control" id="email" [(ngModel)]="client.email" name="email" required>
+                    <input type="email" class="form-control" id="email"  [(ngModel)]="client.email" name="email" required>
+
                   </div>
                 </div>
                 <button type="submit" class="btn btn-block mt-2">

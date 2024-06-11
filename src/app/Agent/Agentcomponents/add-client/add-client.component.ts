@@ -7,17 +7,21 @@ import {IClientRegistrationRequest} from '../../../models/ClientRegistrationRequ
 import {IAgent} from "../../../models/Agent";
 import {IClient} from "../../../models/Client";
 
+import {IPaymentAccount} from "../../../models/paymentAccount";
+
+
 @Component({
   selector: 'app-add-client',
   templateUrl: './add-client.component.html',
   styleUrls: ['./add-client.component.scss']
 })
 export class AddClientComponent implements OnInit {
+  public client: IClient = {} as IClient;
+  public paymentAccount: IPaymentAccount={} as IPaymentAccount;
 
  clientRegistrationRequest: IClientRegistrationRequest = {} as IClientRegistrationRequest;
   constructor(private clientService: ClientService, private router: Router , private toastr: ToastrService) {}
 
-  public client: IClient = {} as IClient;
   ngOnInit(): void {
   }
 
