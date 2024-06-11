@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import {Router} from '@angular/router';
-import {catchError, throwError} from 'rxjs';
-import {IClient} from '../../../models/Client';
 import {ClientService} from '../../../service/client.service';
 import {ToastrService} from 'ngx-toastr';
 import {IClientRegistrationRequest} from '../../../models/ClientRegistrationRequest';
+import {IAgent} from "../../../models/Agent";
+import {IClient} from "../../../models/Client";
 
 @Component({
   selector: 'app-add-client',
@@ -17,6 +17,7 @@ export class AddClientComponent implements OnInit {
  clientRegistrationRequest: IClientRegistrationRequest = {} as IClientRegistrationRequest;
   constructor(private clientService: ClientService, private router: Router , private toastr: ToastrService) {}
 
+  public client: IClient = {} as IClient;
   ngOnInit(): void {
   }
 

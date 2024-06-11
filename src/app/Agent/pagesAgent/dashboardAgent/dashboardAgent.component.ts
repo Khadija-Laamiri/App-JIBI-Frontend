@@ -40,7 +40,6 @@ export class DashboardAgentComponent implements OnInit {
 
     }
 
-
     getAgentByPhone(phoneNum: string) {
         this.agentService.getAgentByPhoneNumber(phoneNum).subscribe(res => {
             console.log(res);
@@ -76,7 +75,6 @@ export class DashboardAgentComponent implements OnInit {
             });
 
         }
-
 
         deleteClient(id: number) {
             console.log(id);
